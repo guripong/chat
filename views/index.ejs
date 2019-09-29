@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+
+<head>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src='/javascripts/socket.io.js'></script>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <input id="tempidvalue"  type="text" value="" placeholder="아이디를 입력하세요">
+  <input id="joinroombtn" type="button" value="방들어가기버튼">
+
+  <div id="totalmsg" style="height:500px;width:100%; border:1px solid black;">
+
+  </div>
+
+</body>
+
+
+<script>
+  var roomname = "a1"; //방이름
+  var id = "1234"; //유저아이디
+
+  
+  $('#joinroombtn').click(function(){
+    id =   $('#tempidvalue').val();
+      ///프론트에서 백앤드로 보내는메시지
+    socket.emit('joinRoom', roomname, id, "허락해줘");//방 들어갈게
+  });
+
+
+  var socket = io("http://localhost:8989");//백앤드소켓주소입력
+
+
+
+
+  //백앤드에서 프론트로 보낸 메시지를 받는곳
+  socket.on('joinRoom', (roomname, id, msg) => {
+    console.log(msg);
+    $('#totalmsg').append('<div>'+msg+'</div>');
+  });
+
+
+</script>
+
 </html>
