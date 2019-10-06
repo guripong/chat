@@ -35,7 +35,8 @@
   });
 
 
-  var socket = io("http://localhost:8989");//백앤드소켓주소입력
+  console.log(window.location.origin);
+  var socket = io(window.location.origin+":8989");//백앤드소켓주소입력
 
 
   //백앤드에서 프론트로 보낸 메시지를 받는곳
