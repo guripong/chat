@@ -12,27 +12,10 @@ var app = express();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //http모듈에서 익스프레스 서버를사용하고
 var http = require('http').Server(app);
 // io 모듈에서 http모듈을 사용할게
 var io = require('socket.io')(http);
-
 ////////////io가 연결이 되었을경우 돌아가는 함수들 지정
 io.on('connection', function (socket) {
   
@@ -48,20 +31,19 @@ io.on('connection', function (socket) {
 
   });
 //////////////////////////////////////
-
-
   //msgbroadcast의 함수명으로 메시지가 왔을때 하는 행위지정
   socket.on('msgbroadcast', function (roomname, id, msg){  
       io.to(roomname).emit('joinRoom', roomname, id, roomname+"방 들어오기 성공");
   });
   //////////////////////////////////////
-
 });
+
 
 http.listen(8989, function () {
   console.log('listening on *:8989  socket.io용 포트');
 
 });
+
 /////////////////////////////////////
 
 
@@ -106,12 +88,16 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+/*
 const port =3389;
 const myip ="0.0.0.0";
 
 app.listen(port,myip, function(){
 	console.log('listening'+port+' port!!!');		
 });
+*/
 
 
 module.exports = app;
